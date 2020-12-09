@@ -20,7 +20,7 @@ var mymap = L.map('map').setView([47.50232, -122.35142], 10);
 	};
 
 	$.getJSON("data/hospitals.geojson",function(data){
-		onEachFeature: onEachFeature,
+		//onEachFeature: onEachFeature,
       L.geoJson(data, {
           pointToLayer: function(feature, latlng){
               var marker = L.circleMarker(latlng,marker_style);
@@ -32,30 +32,30 @@ var mymap = L.map('map').setView([47.50232, -122.35142], 10);
       }).addTo(mymap);
   });
 
-
-	function onEachFeature(feature, layer) {
-			layer.on({
-				mouseover: highlightFeature
-			});
-
-			function highlightFeature(e) {
-					var layer = e.target;
-
-					layer.setStyle({
-						radius: 9,
-	 		 	    fillColor: "#666",
-	 		 	    color: "#000",
-	 		 	    weight: 1,
-	 		 	    opacity: 1,
-	 		 	    fillOpacity: 0.8
-					});
-
-					if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-						layer.bringToFront();
-					}
-
-					info.update(layer.feature.properties);
-				}
+	//
+	// function onEachFeature(feature, layer) {
+	// 		layer.on({
+	// 			mouseover: highlightFeature
+	// 		});
+	//
+	// 		function highlightFeature(e) {
+	// 				var layer = e.target;
+	//
+	// 				layer.setStyle({
+	// 					radius: 9,
+	//  		 	    fillColor: "#666",
+	//  		 	    color: "#000",
+	//  		 	    weight: 1,
+	//  		 	    opacity: 1,
+	//  		 	    fillOpacity: 0.8
+	// 				});
+	//
+	// 				if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+	// 					layer.bringToFront();
+	// 				}
+	//
+	// 				info.update(layer.feature.properties);
+	// 			}
 
 
 
