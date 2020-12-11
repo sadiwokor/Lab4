@@ -79,7 +79,7 @@ function hospitalAccessibleArea(e){
 	var layer = e.target;
 	num_people = randomValue();
 	layer.setStyle({
-				radius: 400,
+				radius: 350,
 		 	    fillColor: getColor(num_people),
 		 	    color: "#8B2323",
 		 	    weight: 5,
@@ -127,7 +127,7 @@ var legend = L.control({position: 'bottomright'});
 
 		var div = L.DomUtil.create('div', 'info legend'),
 			grades = [0, 70],
-			labels = ['2 Miles radius of poeple - Healthcare access'],
+			labels = ['2 Miles radius of poeple - Healthcare access<br>',"<i style='background:#DC143C'></i> Healthcare facility"],
 			from, to;
 
 		for (var i = 0; i < grades.length; i++) {
@@ -138,6 +138,7 @@ var legend = L.control({position: 'bottomright'});
 				'<i style="background:' + getColor(from + 1) + '"></i> ' +
 				from + (to ? ' &ndash; ' + to : '+'));
 		}
+		labels.push();
 
 		div.innerHTML = labels.join('<br>');
 		return div;
