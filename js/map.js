@@ -21,9 +21,9 @@ var mymap = L.map('map',{scrollWheelZoom:false}).setView([47.50232, -122.35142],
 
 // information display
 info.update = function (props,num_people) {
-	this._div.innerHTML = "<h4>Hospital Info</h4>"+ (props ?
+	this._div.innerHTML = "<h5>Healthcare Info</h5>"+ (props ?
 	"Name: <b>"+props.NAME +"</b><br/>Address: <b>"+props.ADDRESS+"</b><br>"+
-	"Num of People in 2 miles Buffer: <b>"+num_people+"</b>"
+	"Num of People in 2 mi Buffer: <b>"+num_people+"</b>"
 	:"Click on Hospital Markers");
 };
 
@@ -116,11 +116,7 @@ function resetmarker(e){
 	info.update();
 }
 
-
-function getColor(d) {
-		return d > 70 ? '#8B2323': '#FFE4C4';
-}
-
+//creating legend
 var legend = L.control({position: 'bottomright'});
 
 	legend.onAdd = function (mymap) {
@@ -136,7 +132,7 @@ var legend = L.control({position: 'bottomright'});
 
 			labels.push(
 				'<i style="background:' + getColor(from + 1) + '"></i> ' +
-				from + (to ? ' &ndash; ' + to : '+'));
+				from + (to ? ' &ndash; ' + to+' (People per 2 mi radius)' : '+ (People per 2 mi radius)'));
 		}
 		labels.push();
 
@@ -144,5 +140,5 @@ var legend = L.control({position: 'bottomright'});
 		return div;
 	};
 
-
+//adds legend to map
 	legend.addTo(mymap);
