@@ -32,7 +32,7 @@ info.addTo(mymap);
 
 
 
-//randomize number between 30 and 100
+//randomize number between 30 and 100 (signifying number of people)
 function randomValue(){
 	return Math.floor(Math.random() * 31) + 70;
 }
