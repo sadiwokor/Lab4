@@ -9,7 +9,8 @@ var mymap = L.map('map',{scrollWheelZoom:false}).setView([47.50232, -122.35142],
 		zoomOffset: -1
 	}).addTo(mymap);
 
-
+//
+	var num_people=0;
 	//controls to show info
 	var info = L.control();
 	info.onAdd = function(mymap){
@@ -18,15 +19,28 @@ var mymap = L.map('map',{scrollWheelZoom:false}).setView([47.50232, -122.35142],
 		return this._div;
 	};
 
-	info.update = function (props) {
-		this._div.innerHTML = "<h4>Hospital Info</h4>"+ (props ?
-		"Name: <b>"+props.NAME +"</b><br/>Address: <b>"+props.ADDRESS+"<b>":"Click on Hospital");
-	};
+//
+info.update = function (props,num_people) {
+	this._div.innerHTML = "<h4>Hospital Info</h4>"+ (props ?
+	"Name: <b>"+props.NAME +"</b><br/>Address: <b>"+props.ADDRESS+"</b><br>"+
+	"Number of People Accessing: <b>"+num_people+"</b>"
+	:"Click on Hospital");
+};
+
+//adding to
+info.addTo(mymap);
 
 
-	info.addTo(mymap);
 
+//ramdomize number between 30 and 100
+function randomValue(){
+	return Math.floor(Math.random() * 31) + 70;
+}
 
+//color range
+function getColor(d) {
+		return d > 70 ? '#8B2323':'#F0FFFF';
+}
 
 
 	var marker_style = {
@@ -44,8 +58,6 @@ var mymap = L.map('map',{scrollWheelZoom:false}).setView([47.50232, -122.35142],
 					onEachFeature: onEachFeature,
           pointToLayer: function(feature, latlng){
               var marker = L.circleMarker(latlng,marker_style);
-              // marker.bindPopup("Case #: " + feature.properties.CaseNo + "<br>LocCode: " + feature.properties.LocCode + "<br>Name of Crime: "+feature.properties.Public_Nam+"<br>Date: "+feature.properties.OccurredOn);
-              //marker.bindPopup("hello!");
               return marker;
           }
 
@@ -65,9 +77,10 @@ function onEachFeature(feature, layer) {
 //create marker with 400 as a distance of 2 mile radius
 function hospitalAccessibleArea(e){
 	var layer = e.target;
+	var num_people = randomValue();
 	layer.setStyle({
 				radius: 400,
-		 	    fillColor: "#F0FFFF",
+		 	    fillColor: getColor(num_people),
 		 	    color: "#8B2323",
 		 	    weight: 5,
 		 	    opacity: 1,
@@ -82,28 +95,7 @@ function hospitalAccessibleArea(e){
 			var latLon = layer.getLatLng();
 			mymap.setView([latLon["lat"],latLon["lng"]],17);
 
-			info.update(layer.feature.properties);
-
-
-
-			// var myZoom = {
-			//   start:  mymap.getZoom(),
-			//   end: mymap.getZoom()
-			// };
-			//
-			// mymap.on('zoomstart', function(e) {
-			//    myZoom.start = mymap.getZoom();
-			// });
-			//
-			// mymap.on('zoomend', function(e) {
-			//     myZoom.end =mymap.getZoom();
-			//     var diff = myZoom.start - myZoom.end;
-			//     if (diff > 0) {
-			//         circle.setRadius(circle.getRadius() * 2);
-			//     } else if (diff < 0) {
-			//         circle.setRadius(circle.getRadius() / 2);
-			//     }
-			// });
+			info.update(layer.feature.properties, num_people);
 
 }
 
