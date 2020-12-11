@@ -9,7 +9,7 @@ var mymap = L.map('map',{scrollWheelZoom:false}).setView([47.50232, -122.35142],
 		zoomOffset: -1
 	}).addTo(mymap);
 
-//
+//number of people variable
 	var num_people=0;
 	//controls to show info
 	var info = L.control();
@@ -19,12 +19,12 @@ var mymap = L.map('map',{scrollWheelZoom:false}).setView([47.50232, -122.35142],
 		return this._div;
 	};
 
-//
+// information display
 info.update = function (props,num_people) {
 	this._div.innerHTML = "<h4>Hospital Info</h4>"+ (props ?
 	"Name: <b>"+props.NAME +"</b><br/>Address: <b>"+props.ADDRESS+"</b><br>"+
 	"Number of People Accessing: <b>"+num_people+"</b>"
-	:"Click on Hospital");
+	:"Click on Hospital Markers");
 };
 
 //adding to
@@ -32,7 +32,7 @@ info.addTo(mymap);
 
 
 
-//ramdomize number between 30 and 100
+//randomize number between 30 and 100
 function randomValue(){
 	return Math.floor(Math.random() * 31) + 70;
 }
@@ -42,18 +42,18 @@ function getColor(d) {
 		return d > 70 ? '#8B2323':'#F0FFFF';
 }
 
+//circle marker
+var marker_style = {
+    radius: 8,
+    fillColor: "#8B2323",
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8
+};
 
-	var marker_style = {
-	    radius: 8,
-	    fillColor: "#8B2323",
-	    color: "#000",
-	    weight: 1,
-	    opacity: 1,
-	    fillOpacity: 0.8
-	};
-
+//displaying geojson data
 	$.getJSON("data/hospitals.geojson",function(data){
-
       L.geoJson(data, {
 					onEachFeature: onEachFeature,
           pointToLayer: function(feature, latlng){
@@ -77,7 +77,7 @@ function onEachFeature(feature, layer) {
 //create marker with 400 as a distance of 2 mile radius
 function hospitalAccessibleArea(e){
 	var layer = e.target;
-	var num_people = randomValue();
+	num_people = randomValue();
 	layer.setStyle({
 				radius: 400,
 		 	    fillColor: getColor(num_people),
@@ -113,4 +113,5 @@ function resetmarker(e){
 	});
 
 	mymap.setView([47.50232, -122.35142],10);
+	info.update();
 }
