@@ -39,13 +39,13 @@ function randomValue(){
 
 //color range
 function getColor(d) {
-		return d > 70 ? '#8B2323':'#F0FFFF';
+		return d > 70 ? '#8B2323': '#FFE4C4';
 }
 
 //circle marker
 var marker_style = {
     radius: 8,
-    fillColor: "#8B2323",
+    fillColor: "#DC143C",
     color: "#000",
     weight: 1,
     opacity: 1,
@@ -105,7 +105,7 @@ function resetmarker(e){
 	var layer = e.target;
 	layer.setStyle({
 			radius: 8,
-			fillColor: "#8B2323",
+			fillColor: "#DC143C",
 			color: "#000",
 			weight: 1,
 			opacity: 1,
@@ -115,3 +115,33 @@ function resetmarker(e){
 	mymap.setView([47.50232, -122.35142],10);
 	info.update();
 }
+
+
+function getColor(d) {
+		return d > 70 ? '#8B2323': '#FFE4C4';
+}
+
+var legend = L.control({position: 'bottomright'});
+
+	legend.onAdd = function (mymap) {
+
+		var div = L.DomUtil.create('div', 'info legend'),
+			grades = [0, 70],
+			labels = ['2 Miles radius of poeple - Healthcare access'],
+			from, to;
+
+		for (var i = 0; i < grades.length; i++) {
+			from = grades[i];
+			to = grades[i + 1];
+
+			labels.push(
+				'<i style="background:' + getColor(from + 1) + '"></i> ' +
+				from + (to ? ' &ndash; ' + to : '+'));
+		}
+
+		div.innerHTML = labels.join('<br>');
+		return div;
+	};
+
+
+	legend.addTo(mymap);
