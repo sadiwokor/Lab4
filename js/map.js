@@ -10,6 +10,25 @@ var mymap = L.map('map',{scrollWheelZoom:false}).setView([47.50232, -122.35142],
 	}).addTo(mymap);
 
 
+	//controls to show info
+	var info = L.control();
+	info.onAdd = function(mymap){
+		this._div = L.DomUtil.create('div', 'info');
+		this.update();
+		return this._div;
+	};
+
+	info.update = function (props) {
+		this._div.innerHTML = "<h4>Hospital Info</h4>"+ (props ?
+		"Name: <b>"+props.NAME +"</b><br/>Address: <b>"+props.ADDRESS+"<b>":"Click on Hospital");
+	};
+
+
+	info.addTo(mymap);
+
+
+
+
 	var marker_style = {
 	    radius: 8,
 	    fillColor: "#8B2323",
@@ -43,6 +62,7 @@ function onEachFeature(feature, layer) {
 		});
 }
 
+//create marker with 400 as a distance of 2 mile radius
 function hospitalAccessibleArea(e){
 	var layer = e.target;
 	layer.setStyle({
@@ -61,6 +81,8 @@ function hospitalAccessibleArea(e){
 
 			var latLon = layer.getLatLng();
 			mymap.setView([latLon["lat"],latLon["lng"]],17);
+
+			info.update(layer.feature.properties);
 
 
 
@@ -86,7 +108,7 @@ function hospitalAccessibleArea(e){
 }
 
 
-
+//reset and zoom marker to default
 function resetmarker(e){
 	var layer = e.target;
 	layer.setStyle({
@@ -98,5 +120,5 @@ function resetmarker(e){
 			fillOpacity: 0.8
 	});
 
-			mymap.setView([47.50232, -122.35142],10);
+	mymap.setView([47.50232, -122.35142],10);
 }
