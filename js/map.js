@@ -23,7 +23,7 @@ var mymap = L.map('map',{scrollWheelZoom:false}).setView([47.50232, -122.35142],
 info.update = function (props,num_people) {
 	this._div.innerHTML = "<h4>Hospital Info</h4>"+ (props ?
 	"Name: <b>"+props.NAME +"</b><br/>Address: <b>"+props.ADDRESS+"</b><br>"+
-	"Number of People Accessing: <b>"+num_people+"</b>"
+	"Num of People in 2 miles Buffer: <b>"+num_people+"</b>"
 	:"Click on Hospital Markers");
 };
 
