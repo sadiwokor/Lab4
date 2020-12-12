@@ -167,7 +167,7 @@ var popmap = L.map('popmap',{scrollWheelZoom:false}).setView([47.45591, -121.799
 
 // information display
 popinfo.update = function (props) {
-	this._div.innerHTML = "<h5>Occupancy Status</h5>"+ (props ?
+	this._div.innerHTML = "<h6>Occupancy Status (2012-2016)</h6>"+ (props ?
 	"Housing Unit: <b>"+props.TRACT_LBL +"</b><br/>Estimate Occupied Units: <b>"+props.E25002003+"</b><br>"+
 	"Estimate Vacant Units: <b>"+props.E25002004+"</b>"
 	:"Click on Housing Units");
