@@ -182,10 +182,10 @@ popinfo.addTo(popmap);
 		return {
 			weight: 1,
 			opacity: 1,
-			color: '#C1FFC1',
+			color: '#ABABAB',
 			dashArray: '',
 			fillOpacity: 0.7,
-			fillColor: getpopcolor(feature.properties.E25002002)
+			fillColor: getpopcolor(feature.properties.E25002003)
 		};
 	}
 
