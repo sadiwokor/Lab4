@@ -184,7 +184,7 @@ popinfo.addTo(popmap);
 			opacity: 1,
 			color: '#ABABAB',
 			dashArray: '',
-			fillOpacity: 0.7,
+			fillOpacity: 0.6,
 			fillColor: getpopcolor(feature.properties.E25002003)
 		};
 	}
