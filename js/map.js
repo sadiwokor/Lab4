@@ -190,15 +190,19 @@ popinfo.addTo(popmap);
 	}
 
 
-	// get color depending on population density value
+	// get color depending on occupancy estimate
 		function getpopcolor(d) {
-			return d > 1800 ? '#800026' :
+			return d > 3500 ? '#668B8B' :
+					d > 3000  ? '#96CDCD' :
+					d > 2500  ? '#AEEEEE' :
+					d> 2000 ? '#BBFFFF' :
+					d> 1800 ? '#800026' :
 					d > 1600  ? '#BD0026' :
 					d > 1400  ? '#E31A1C' :
 					d > 1200  ? '#FC4E2A' :
 					d > 1000   ? '#FD8D3C' :
 					d > 800   ? '#FEB24C' :
-					d > 600   ? '#FED976' :
+					d > 500   ? '#FED976' :
 								'#FFEDA0';
 		}
 
@@ -252,3 +256,28 @@ popinfo.addTo(popmap);
 				popmap.setView([47.45591, -121.79971], 10);
 				popinfo.update();
 			}
+
+
+			var poplegend = L.control({position: 'bottomright'});
+
+				poplegend.onAdd = function (map) {
+
+					var popdiv = L.DomUtil.create('div', 'popinfo poplegend'),
+						popgrades = [0, 500, 800, 1000, 1200, 1400, 1600, 1800,2000,2500,3000,3500],
+						poplabels = [],
+						popfrom, popto;
+
+					for (var i = 0; i < popgrades.length; i++) {
+						popfrom = popgrades[i];
+						popto = popgrades[i + 1];
+
+						poplabels.push(
+							'<i style="background:' + getpopcolor(popfrom + 1) + '"></i> ' +
+							popfrom + (popto ? '&ndash;' + popto : '+'));
+					}
+
+					popdiv.innerHTML = poplabels.join('<br>');
+					return popdiv;
+				};
+
+				poplegend.addTo(popmap);
