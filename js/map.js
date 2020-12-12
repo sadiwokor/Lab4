@@ -167,10 +167,10 @@ var popmap = L.map('popmap',{scrollWheelZoom:false}).setView([47.45591, -121.799
 
 // information display
 popinfo.update = function (props) {
-	this._div.innerHTML = "<h5>Housing Unit</h5>"+ (props ?
-	"Tract Label: <b>"+props.TRACT_LBL +"</b><br/>E25002002: <b>"+props.E25002002+"</b><br>"+
-	"M25002002: <b>"+props.M25002002+"</b>"
-	:"Click on Hospital Markers");
+	this._div.innerHTML = "<h5>Occupancy Status</h5>"+ (props ?
+	"Housing Unit: <b>"+props.TRACT_LBL +"</b><br/>Estimate Occupied Units: <b>"+props.E25002003+"</b><br>"+
+	"Estimate Vacant Units: <b>"+props.E25002004+"</b>"
+	:"Click on Housing Units");
 };
 
 //adding to
