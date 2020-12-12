@@ -142,3 +142,113 @@ var legend = L.control({position: 'bottomright'});
 
 //adds legend to map
 	legend.addTo(mymap);
+
+//======================================================end of healthcare access map =================================
+
+
+var popmap = L.map('popmap',{scrollWheelZoom:false}).setView([47.45591, -121.79971], 10);
+
+	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+		maxZoom: 18,
+		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+		id: 'mapbox/light-v9',
+		tileSize: 512,
+		zoomOffset: -1
+	}).addTo(popmap);
+
+
+	var popinfo = L.control();
+	popinfo.onAdd = function(popmap){
+		this._div = L.DomUtil.create('div', 'popinfo');
+		this.update();
+		return this._div;
+	};
+
+// information display
+popinfo.update = function (props) {
+	this._div.innerHTML = "<h5>Housing Unit</h5>"+ (props ?
+	"Tract Label: <b>"+props.TRACT_LBL +"</b><br/>E25002002: <b>"+props.E25002002+"</b><br>"+
+	"M25002002: <b>"+props.M25002002+"</b>"
+	:"Click on Hospital Markers");
+};
+
+//adding to
+popinfo.addTo(popmap);
+
+	var popjeoson;
+
+	function popStyle(feature) {
+		return {
+			weight: 1,
+			opacity: 1,
+			color: '#C1FFC1',
+			dashArray: '',
+			fillOpacity: 0.7,
+			fillColor: getpopcolor(feature.properties.E25002002)
+		};
+	}
+
+
+	// get color depending on population density value
+		function getpopcolor(d) {
+			return d > 1800 ? '#800026' :
+					d > 1600  ? '#BD0026' :
+					d > 1400  ? '#E31A1C' :
+					d > 1200  ? '#FC4E2A' :
+					d > 1000   ? '#FD8D3C' :
+					d > 800   ? '#FEB24C' :
+					d > 600   ? '#FED976' :
+								'#FFEDA0';
+		}
+
+		//displaying geojson data
+			$.getJSON("data/occupancy_status.geojson",function(data){
+		     popjeoson = L.geoJson(data, {
+						style:popStyle,
+					  onEachFeature: onEachHousingFeature
+
+		      }).addTo(popmap);
+		  });
+
+
+
+			function onEachHousingFeature(feature, layer){
+				layer.on({
+					mouseover: hoverHousingUnitFeature,
+					mouseout: resetHousingUnit,
+					click:clickHousingUnitFeature
+				});
+			}
+
+
+			function clickHousingUnitFeature(e){
+				//do nothing
+				popmap.fitBounds(e.target.getBounds());
+			}
+
+
+			function hoverHousingUnitFeature(e){
+					var layer = e.target;
+
+					layer.setStyle({
+						weight: 2,
+						color: '#9400D3',
+						dashArray: '',
+						fillOpacity: 0.7
+					});
+
+					if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+						layer.bringToFront();
+					}
+
+					popinfo.update(layer.feature.properties);
+
+			}
+
+
+			function resetHousingUnit(e){
+				popjeoson.resetStyle(e.target);
+				popmap.setView([47.45591, -121.79971], 10);
+				popinfo.update();
+			}
