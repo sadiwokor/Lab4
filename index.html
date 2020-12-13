@@ -82,7 +82,11 @@
 
         <!-- Portfolio Section-->
         <section class="page-section portfolio" id="humap" style="padding-top:0px;padding-bottom:0px;">
+          <div class="chart-container" style="position: absolute;height:30vh; width:20vw;z-index:30;margin-top:100px;margin-left:8px;">
+            <canvas id='occupancy_chart'></canvas>
+          </div>
                 <div id="popmap"></div>
+
         </section>
         <!-- About Section-->
         <section class="page-section bg-primary text-white mb-0" id="hunit">
@@ -98,7 +102,8 @@
                 <!-- About Section Content-->
                 <div class="row">
                         <p class="masthead-subheading font-weight-light mb-0">As population increase in a geographic space, demand on housing increase. There is therefore the need to make future projections on the demand and supply of housing. In this regard, an extrapolated estimate on OCCUPANCY STATUS was generated based solely on sampling. This estimate is derived from the US Census America Community Survey (ACS) data which are continually collected.
-This data was from King County website and provides a multi-year statistical estimate for selected demographic, social, economic and housing characteristics.
+This data was from King County website and provides a multi-year statistical estimate for selected demographic, social, economic and housing characteristics. <br></br> Clicking or hovering over the estimated occupancy housing status Polygon will display a chart between Estimated Occupied housing Unit and Estimated Vacancy unit. The plot helps the goverment to make future predictions of areas with King county to have low vacancys in housing and areas
+that could have relatively high occupancy status. 
 </p>
                 </div>
 
@@ -122,6 +127,7 @@ This data was from King County website and provides a multi-year statistical est
         <!-- Third party plugin JS-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
         <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
         <!-- Contact form JS-->
         <script src="assets/mail/jqBootstrapValidation.js"></script>
         <script src="assets/mail/contact_me.js"></script>
