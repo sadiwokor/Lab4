@@ -171,7 +171,7 @@ popinfo.update = function (props) {
 	this._div.innerHTML = "<h6>Occupancy Status (2012-2016)</h6>"+ (props ?
 	"Housing Unit: <b>"+props.TRACT_LBL +"</b><br/>Estimate Occupied Units: <b>"+props.E25002003+"</b><br>"+
 	"Estimate Vacant Units: <b>"+props.E25002004+"</b>"
-	:"Click on Housing Units");
+	:"Click on Housing Units to View chart");
 };
 
 //adding to
@@ -319,7 +319,7 @@ popinfo.addTo(popmap);
 
 					// The data for our dataset
 					data: {
-							labels: ['Estimated Occupied', 'Estimated Vacant'],
+							labels: ['Est. Occupied', 'Est. Vacancy'],
 							datasets: [{
 									label: 'Occupied and Vacant Units',
 									backgroundColor: ['rgb(255, 99, 132,0.7)','rgba(54, 162, 235, 0.7)'],
