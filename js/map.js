@@ -230,6 +230,7 @@ popinfo.addTo(popmap);
 			function clickHousingUnitFeature(e){
 				//do nothing
 				popmap.fitBounds(e.target.getBounds());
+				$(".chart-container").show();
 			}
 
 
@@ -248,7 +249,8 @@ popinfo.addTo(popmap);
 					}
 
 					popinfo.update(layer.feature.properties);
-
+					estimate_chartinfo.update(layer.feature.properties);
+					$(".chart-container").show();
 			}
 
 
@@ -256,6 +258,7 @@ popinfo.addTo(popmap);
 				popjeoson.resetStyle(e.target);
 				popmap.setView([47.45591, -121.79971], 10);
 				popinfo.update();
+				$(".chart-container").hide();
 			}
 
 
@@ -282,3 +285,53 @@ popinfo.addTo(popmap);
 				};
 
 				poplegend.addTo(popmap);
+
+
+				$(".chart-container").hide();
+
+				var estimate_chartinfo = L.control({position: 'bottomleft'});
+
+				estimate_chartinfo.onAdd = function(popmap){
+					this._div = L.DomUtil.create('div', 'popinfo');
+					this.update();
+					return this._div;
+				};
+
+			// information display
+			estimate_chartinfo.update = function (props) {
+				// this._div.innerHTML = "<h6>Occupancy Status (2012-2016)</h6>"+ (props ?
+				// "Housing Unit: <b>"+props.TRACT_LBL +"</b><br/>Estimate Occupied Units: <b>"+props.E25002003+"</b><br>"+
+				// "Estimate Vacant Units: <b>"+props.E25002004+"</b>"
+				// :"Click on Housing Units");
+				//this._div.innerHTML = "<canvas id='occupancy_chart'></canvas>";
+
+
+				createChart(props.E25002003,props.E25002004);
+
+			};
+
+
+			function createChart(estimated_occupied,estimate_vacant){
+				var ctx = document.getElementById('occupancy_chart');
+				var chart = new Chart(ctx, {
+				// The type of chart we want to create
+				type: 'bar',
+
+					// The data for our dataset
+					data: {
+							labels: ['Estimated Occupied', 'Estimated Vacant'],
+							datasets: [{
+									label: 'Occupied and Vacant Units',
+									backgroundColor: ['rgb(255, 99, 132,0.7)','rgba(54, 162, 235, 0.7)'],
+									borderColor: ['rgb(255, 99, 132,0.7)','rgba(54, 162, 235, 0.7)'],
+									data: [estimated_occupied, estimate_vacant]
+							}]
+					},
+
+					// Configuration options go here
+					options: {}
+			});
+			}
+
+			//adding to
+			estimate_chartinfo.addTo(popmap);
