@@ -159,6 +159,7 @@ var popmap = L.map('popmap',{scrollWheelZoom:false}).setView([47.45591, -121.799
 
 
 	var popinfo = L.control();
+
 	popinfo.onAdd = function(popmap){
 		this._div = L.DomUtil.create('div', 'popinfo');
 		this.update();
@@ -264,7 +265,7 @@ popinfo.addTo(popmap);
 
 					var popdiv = L.DomUtil.create('div', 'popinfo poplegend'),
 						popgrades = [0, 500, 800, 1000, 1200, 1400, 1600, 1800,2000,2500,3000,3500],
-						poplabels = [],
+						poplabels = ['<b>Estimated Occupied Units</b>'],
 						popfrom, popto;
 
 					for (var i = 0; i < popgrades.length; i++) {
