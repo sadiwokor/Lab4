@@ -52,7 +52,7 @@ var marker_style = {
     fillOpacity: 0.8
 };
 
-//displaying geojson data
+//displaying geojson data {data was obtain from King county GIS website}
 	$.getJSON("data/hospitals.geojson",function(data){
       L.geoJson(data, {
 					onEachFeature: onEachFeature,
@@ -65,7 +65,7 @@ var marker_style = {
   });
 
 
-
+//perform a task when feature is clicked or hovered
 function onEachFeature(feature, layer) {
 		layer.on({
 			// mouseover: hospitalAccessibleArea,
