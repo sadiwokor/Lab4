@@ -145,7 +145,7 @@ var legend = L.control({position: 'bottomright'});
 
 //======================================================end of healthcare access map =================================
 
-
+//initialize a new map
 var popmap = L.map('popmap',{scrollWheelZoom:false}).setView([47.45591, -121.79971], 10);
 
 	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
@@ -157,7 +157,7 @@ var popmap = L.map('popmap',{scrollWheelZoom:false}).setView([47.45591, -121.799
 		zoomOffset: -1
 	}).addTo(popmap);
 
-
+	//instantiate control for occupancy status div
 	var popinfo = L.control();
 
 	popinfo.onAdd = function(popmap){
@@ -174,7 +174,7 @@ popinfo.update = function (props) {
 	:"Click on Housing Units to View chart");
 };
 
-//adding to
+//adding occupancy status div to map
 popinfo.addTo(popmap);
 
 	var popjeoson;
@@ -207,7 +207,7 @@ popinfo.addTo(popmap);
 								'#FFEDA0';
 		}
 
-		//displaying geojson data
+		//displaying geojson data {data was obtain from King county GIS website}
 			$.getJSON("data/occupancy_status.geojson",function(data){
 		     popjeoson = L.geoJson(data, {
 						style:popStyle,
@@ -217,7 +217,7 @@ popinfo.addTo(popmap);
 		  });
 
 
-
+			//function perform operation on mouseover, mouseout and mouse click
 			function onEachHousingFeature(feature, layer){
 				layer.on({
 					mouseover: hoverHousingUnitFeature,
@@ -226,14 +226,14 @@ popinfo.addTo(popmap);
 				});
 			}
 
-
+			//function runs on mouse click... zoom to feature bounds
 			function clickHousingUnitFeature(e){
 				//do nothing
 				popmap.fitBounds(e.target.getBounds());
 				$(".chart-container").show();
 			}
 
-
+			// function display layer outline, data and chart
 			function hoverHousingUnitFeature(e){
 					var layer = e.target;
 
@@ -253,7 +253,7 @@ popinfo.addTo(popmap);
 					$(".chart-container").show();
 			}
 
-
+			//function runs on mouseout to reset map zoom to a default
 			function resetHousingUnit(e){
 				popjeoson.resetStyle(e.target);
 				popmap.setView([47.45591, -121.79971], 10);
@@ -261,9 +261,9 @@ popinfo.addTo(popmap);
 				$(".chart-container").hide();
 			}
 
-
+			//instatiating legend control on bottomright
 			var poplegend = L.control({position: 'bottomright'});
-
+			
 				poplegend.onAdd = function (map) {
 
 					var popdiv = L.DomUtil.create('div', 'popinfo poplegend'),
@@ -297,7 +297,7 @@ popinfo.addTo(popmap);
 					return this._div;
 				};
 
-			// information display
+			// display chart function
 			estimate_chartinfo.update = function (props) {
 				// this._div.innerHTML = "<h6>Occupancy Status (2012-2016)</h6>"+ (props ?
 				// "Housing Unit: <b>"+props.TRACT_LBL +"</b><br/>Estimate Occupied Units: <b>"+props.E25002003+"</b><br>"+
@@ -310,7 +310,7 @@ popinfo.addTo(popmap);
 
 			};
 
-
+			//function build a chart of estimated occupancy and estimated vacancy
 			function createChart(estimated_occupied,estimate_vacant){
 				var ctx = document.getElementById('occupancy_chart');
 				var chart = new Chart(ctx, {
@@ -333,5 +333,5 @@ popinfo.addTo(popmap);
 			});
 			}
 
-			//adding to
+			//add chart div to map
 			estimate_chartinfo.addTo(popmap);
