@@ -264,7 +264,7 @@ popinfo.addTo(popmap);
 			var poplegend = L.control({position: 'bottomright'});
 
 				poplegend.onAdd = function (map) {
-
+					//defining the legend colors
 					var popdiv = L.DomUtil.create('div', 'popinfo poplegend'),
 						popgrades = [0, 500, 800, 1000, 1200, 1400, 1600, 1800,2000,2500,3000,3500],
 						poplabels = ['<b>Estimated Occupied Units</b>'],
