@@ -326,3 +326,5 @@ popinfo.addTo(popmap);
 
 			//add chart div to map
 			estimate_chartinfo.addTo(popmap);
+
+			//written by: ====================== myLORD==================
