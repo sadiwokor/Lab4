@@ -1,3 +1,4 @@
+//initializing a map variable for the healthcare map
 var mymap = L.map('map',{scrollWheelZoom:false}).setView([47.50232, -122.35142], 10);
 
 	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
@@ -60,7 +61,6 @@ var marker_style = {
               var marker = L.circleMarker(latlng,marker_style);
               return marker;
           }
-
       }).addTo(mymap);
   });
 
@@ -111,7 +111,7 @@ function resetmarker(e){
 			opacity: 1,
 			fillOpacity: 0.8
 	});
-
+	//zoom to feature default status
 	mymap.setView([47.50232, -122.35142],10);
 	info.update();
 }
@@ -145,7 +145,7 @@ var legend = L.control({position: 'bottomright'});
 
 //======================================================end of healthcare access map =================================
 
-//initialize a new map
+//initialize a new map for occupancy status
 var popmap = L.map('popmap',{scrollWheelZoom:false}).setView([47.45591, -121.79971], 10);
 
 	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
@@ -212,7 +212,6 @@ popinfo.addTo(popmap);
 		     popjeoson = L.geoJson(data, {
 						style:popStyle,
 					  onEachFeature: onEachHousingFeature
-
 		      }).addTo(popmap);
 		  });
 
@@ -263,7 +262,7 @@ popinfo.addTo(popmap);
 
 			//instatiating legend control on bottomright
 			var poplegend = L.control({position: 'bottomright'});
-			
+
 				poplegend.onAdd = function (map) {
 
 					var popdiv = L.DomUtil.create('div', 'popinfo poplegend'),
@@ -299,15 +298,7 @@ popinfo.addTo(popmap);
 
 			// display chart function
 			estimate_chartinfo.update = function (props) {
-				// this._div.innerHTML = "<h6>Occupancy Status (2012-2016)</h6>"+ (props ?
-				// "Housing Unit: <b>"+props.TRACT_LBL +"</b><br/>Estimate Occupied Units: <b>"+props.E25002003+"</b><br>"+
-				// "Estimate Vacant Units: <b>"+props.E25002004+"</b>"
-				// :"Click on Housing Units");
-				//this._div.innerHTML = "<canvas id='occupancy_chart'></canvas>";
-
-
 				createChart(props.E25002003,props.E25002004);
-
 			};
 
 			//function build a chart of estimated occupancy and estimated vacancy
